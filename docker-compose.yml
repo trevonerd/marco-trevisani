@@ -11,7 +11,7 @@ services:
       - 80
     restart: always
     environment:
-      VIRTUAL_HOST: blog.example.com
-      LETSENCRYPT_HOST: blog.example.com
-      LETSENCRYPT_EMAIL: foo@example.com
+      VIRTUAL_HOST: www.marcotrevisani.com
+      LETSENCRYPT_HOST: www.marcotrevisani.com
+      LETSENCRYPT_EMAIL: info@marcotrevisani.com
     container_name: marco-trevisani
