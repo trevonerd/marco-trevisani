@@ -6,11 +6,7 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "static": "next export",
-        "docker:stop": "docker stop marco-trevisani",
-        "docker:update": "docker build -t nextjs-docker .",
-        "docker:compose": "docker-compose up -d",
-        "docker:deploy": "yarn docker:stop && yarn docker:update && yarn docker:compose"
+        "static": "next export"
     },
     "dependencies": {
         "next": "9.2.1",

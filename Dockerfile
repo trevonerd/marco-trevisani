@@ -16,9 +16,4 @@ RUN yarn build
 
 RUN npx next telemetry disable
 
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
-
-USER nextjs
-
-CMD [ "yarn", "start" ]
+CMD [ "yarn", "start"]

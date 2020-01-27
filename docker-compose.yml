@@ -1,17 +1,23 @@
-version: '3.1'
+version: '3'
 
 services:
-  nextjs:
-    ports:
-      - 80:3000
-    build:
-      context: .
-      dockerfile: Dockerfile
-    expose:
-      - 80
-    restart: always
-    environment:
-      VIRTUAL_HOST: www.marcotrevisani.com
-      LETSENCRYPT_HOST: www.marcotrevisani.com
-      LETSENCRYPT_EMAIL: info@marcotrevisani.com
-    container_name: marco-trevisani
+    nextjs:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        expose:
+            - 3000
+        restart: always
+        environment:
+            VIRTUAL_HOST: www.marcotrevisani.com
+            VIRTUAL_PORT: 3000
+            LETSENCRYPT_HOST: www.marcotrevisani.com
+            LETSENCRYPT_EMAIL: info@marcotrevisani.com
+        container_name: marco-trevisani
+        ports:
+            - '3000:3000'
+
+networks:
+    default:
+        external:
+            name: nginx-proxy
