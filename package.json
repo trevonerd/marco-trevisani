@@ -13,7 +13,7 @@
         "docker:deploy": "yarn docker:stop && yarn docker:update && yarn docker:compose"
     },
     "dependencies": {
-        "next": "9.3.3",
+        "next": "11.1.0",
         "react": "16.13.1",
         "react-dom": "16.13.1",
         "react-ga": "^2.7.0"
