@@ -250,7 +250,9 @@ svg {
 .portrait-stage {
   display: grid;
   justify-items: center;
+  perspective: 900px;
   position: relative;
+  transform-style: preserve-3d;
   width: min(100%, 390px);
 }
 
@@ -284,7 +286,8 @@ svg {
     portrait-border-signal 30s ease-in-out 4s infinite;
 }
 
-.portrait:hover {
+.portrait:hover,
+.portrait-stage:hover .portrait {
   border-color: color-mix(in srgb, var(--alien-accent) 40%, var(--alien-line));
   box-shadow:
     var(--alien-shadow),
@@ -471,6 +474,7 @@ svg {
   border: 0;
   margin: 0;
   padding: 0;
+  pointer-events: none;
   position: absolute;
   right: 0.75rem;
   top: 0.75rem;
@@ -508,6 +512,7 @@ svg {
   justify-items: center;
   overflow: visible;
   padding: 0;
+  pointer-events: auto;
   position: relative;
   transition:
     background 160ms ease,
@@ -638,6 +643,7 @@ svg {
   display: grid;
   gap: 0.45rem;
   padding: 0.7rem 0.62rem;
+  pointer-events: auto;
   position: absolute;
   right: 0;
   top: calc(100% + 0.55rem);
