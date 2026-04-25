@@ -4,6 +4,7 @@ import type {
   HTMLAttributes,
   ReactNode
 } from "react";
+import { forwardRef } from "react";
 
 type PolymorphicClassName = {
   className?: string;
@@ -49,12 +50,14 @@ export function Badge({
   return <span className={cx("alien-badge", className)} {...props} />;
 }
 
-export function Surface({
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cx("alien-surface", className)} {...props} />;
-}
+export const Surface = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(function Surface({ className, ...props }, ref) {
+  return (
+    <div ref={ref} className={cx("alien-surface", className)} {...props} />
+  );
+});
 
 export type SocialLinkProps = Omit<
   AnchorHTMLAttributes<HTMLAnchorElement>,
