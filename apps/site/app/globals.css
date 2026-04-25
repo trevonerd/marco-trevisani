@@ -243,6 +243,7 @@ svg {
   align-content: center;
   display: grid;
   gap: 1rem;
+  justify-items: center;
   perspective: 900px;
 }
 
@@ -668,6 +669,7 @@ svg {
   .portrait {
     margin: 0 auto;
     max-width: 380px;
+    width: min(100%, 380px);
   }
 
   .signal {
@@ -700,8 +702,24 @@ svg {
     width: 100%;
   }
 
+  .hero__visual {
+    justify-items: center;
+  }
+
+  .portrait {
+    align-content: center;
+    aspect-ratio: 1 / 1.04;
+    max-width: 330px;
+    padding: 1rem;
+    width: min(100%, 330px);
+  }
+
   .portrait__image {
-    width: min(58vw, 190px);
+    width: min(62vw, 205px);
+  }
+
+  .portrait__role {
+    margin-top: 0.35rem;
   }
 
   .audio-toggle {
@@ -714,7 +732,9 @@ svg {
   }
 
   .socials {
-    justify-content: flex-start;
+    justify-content: center;
+    max-width: 330px;
+    width: 100%;
   }
 }
 
