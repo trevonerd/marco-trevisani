@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const VOLUME = 0.18;
+const ACTIVITY_EVENTS = ["pointerdown", "keydown", "touchstart"] as const;
 
 export function AudioPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -10,6 +11,7 @@ export function AudioPlayer() {
   const ctrlDownRef = useRef(false);
   const hoverRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isAutoplayBlocked, setIsAutoplayBlocked] = useState(false);
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   const [volume, setVolume] = useState(VOLUME);
 
@@ -21,10 +23,43 @@ export function AudioPlayer() {
     }
 
     audio.volume = VOLUME;
-    audio.play().then(
-      () => setIsPlaying(true),
-      () => setIsPlaying(false)
-    );
+
+    async function startAudio() {
+      if (!audio) {
+        return;
+      }
+
+      try {
+        await audio.play();
+        setIsAutoplayBlocked(false);
+        setIsPlaying(true);
+      } catch {
+        setIsAutoplayBlocked(true);
+        setIsPlaying(false);
+      }
+    }
+
+    function unlockAudio() {
+      void startAudio();
+    }
+
+    void startAudio();
+
+    for (const eventName of ACTIVITY_EVENTS) {
+      window.addEventListener(eventName, unlockAudio, {
+        capture: true,
+        once: true,
+        passive: true
+      });
+    }
+
+    return () => {
+      for (const eventName of ACTIVITY_EVENTS) {
+        window.removeEventListener(eventName, unlockAudio, {
+          capture: true
+        });
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -67,8 +102,13 @@ export function AudioPlayer() {
     }
 
     if (audio.paused) {
-      await audio.play();
-      setIsPlaying(true);
+      try {
+        await audio.play();
+        setIsAutoplayBlocked(false);
+        setIsPlaying(true);
+      } catch {
+        setIsAutoplayBlocked(true);
+      }
       return;
     }
 
@@ -129,11 +169,15 @@ export function AudioPlayer() {
       <audio
         ref={audioRef}
         src="/audio/trevisoft.mp3"
+        autoPlay
         loop
         preload="auto"
         onEnded={() => setIsPlaying(false)}
         onPause={() => setIsPlaying(false)}
-        onPlay={() => setIsPlaying(true)}
+        onPlay={() => {
+          setIsAutoplayBlocked(false);
+          setIsPlaying(true);
+        }}
       >
         <track kind="captions" />
       </audio>
@@ -141,9 +185,17 @@ export function AudioPlayer() {
         className="audio-toggle__button"
         type="button"
         onClick={toggleAudio}
-        aria-label={isPlaying ? "Turn music off" : "Turn music on"}
+        aria-label={
+          isPlaying
+            ? "Turn music off"
+            : isAutoplayBlocked
+              ? "Start music"
+              : "Turn music on"
+        }
         aria-pressed={isPlaying}
-        data-state={isPlaying ? "playing" : "paused"}
+        data-state={
+          isPlaying ? "playing" : isAutoplayBlocked ? "waiting" : "paused"
+        }
       >
         <span className="audio-toggle__ring" aria-hidden="true" />
         <span className="audio-toggle__bars" aria-hidden="true">

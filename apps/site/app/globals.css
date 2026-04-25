@@ -102,24 +102,26 @@ svg {
 }
 
 .page {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
   margin: 0 auto;
   max-width: 1180px;
   min-height: 100svh;
-  padding: 1.2rem;
+  padding: clamp(0.8rem, 2vh, 1.2rem) 1.2rem;
 }
 
 .hero {
+  align-items: center;
   display: grid;
-  gap: clamp(1.6rem, 5vw, 5rem);
+  gap: clamp(1.4rem, 4vw, 4.2rem);
   grid-template-columns: minmax(0, 1fr) minmax(250px, 0.58fr);
-  min-height: calc(100svh - 7rem);
-  padding: clamp(1.2rem, 3vw, 2.6rem) 0;
+  min-height: 0;
+  padding: clamp(0.8rem, 2vh, 1.6rem) 0 clamp(1rem, 2.5vh, 2rem);
 }
 
 .hero__content {
-  align-self: start;
+  align-self: center;
   max-width: 760px;
-  padding-top: clamp(1.8rem, 7vh, 5rem);
 }
 
 .hero__eyebrow {
@@ -354,6 +356,8 @@ svg {
   display: grid;
   gap: clamp(1.2rem, 3vw, 2.5rem);
   grid-template-columns: minmax(0, 1fr) auto;
+  align-self: end;
+  margin-bottom: clamp(0.6rem, 2vh, 1.1rem);
   margin-top: 0;
   overflow: hidden;
   padding: clamp(1.1rem, 3vw, 1.5rem);
@@ -523,6 +527,12 @@ svg {
     0 0 42px rgb(0 245 255 / 16%);
 }
 
+.audio-toggle__button[data-state="waiting"] {
+  background: rgb(0 245 255 / 10%);
+  border-color: color-mix(in srgb, var(--alien-accent) 62%, var(--alien-line));
+  color: var(--alien-accent);
+}
+
 .audio-toggle__ring {
   border: 1px solid color-mix(in srgb, var(--alien-hot) 56%, transparent);
   border-radius: inherit;
@@ -533,6 +543,11 @@ svg {
 
 .audio-toggle__button[data-state="playing"] .audio-toggle__ring {
   animation: audio-ring 1.8s ease-in-out infinite;
+}
+
+.audio-toggle__button[data-state="waiting"] .audio-toggle__ring {
+  animation: audio-ring 2.4s ease-in-out infinite;
+  border-color: color-mix(in srgb, var(--alien-accent) 58%, transparent);
 }
 
 .audio-toggle__bars {
@@ -631,7 +646,13 @@ svg {
 }
 
 @media (max-width: 820px) {
+  .page {
+    display: block;
+    min-height: 0;
+  }
+
   .hero {
+    align-items: start;
     grid-template-columns: 1fr;
     min-height: auto;
   }
@@ -651,6 +672,7 @@ svg {
 
   .signal {
     grid-template-columns: 1fr;
+    margin-bottom: 0;
     margin-top: 1.2rem;
   }
 
@@ -670,8 +692,8 @@ svg {
   }
 
   .hero__title {
-    font-size: clamp(3.3rem, 18vw, 4.9rem);
-    max-width: 8ch;
+    font-size: clamp(2.9rem, 15vw, 4.5rem);
+    max-width: 100%;
   }
 
   .alien-button {
@@ -884,6 +906,7 @@ svg {
   .hero__name-word::before,
   .hero__name-word::after,
   .audio-toggle__button[data-state="playing"] .audio-toggle__ring,
+  .audio-toggle__button[data-state="waiting"] .audio-toggle__ring,
   .audio-toggle__button[data-state="playing"] .audio-toggle__bars span,
   .portrait::before,
   .portrait::after,
