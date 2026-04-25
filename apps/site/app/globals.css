@@ -247,6 +247,13 @@ svg {
   perspective: 900px;
 }
 
+.portrait-stage {
+  display: grid;
+  justify-items: center;
+  position: relative;
+  width: min(100%, 390px);
+}
+
 .portrait {
   align-content: center;
   aspect-ratio: 1;
@@ -271,7 +278,7 @@ svg {
     box-shadow 220ms ease,
     transform 220ms ease;
   will-change: transform;
-  width: min(100%, 390px);
+  width: 100%;
   animation:
     portrait-rise 800ms ease 240ms both,
     portrait-border-signal 30s ease-in-out 4s infinite;
@@ -467,8 +474,7 @@ svg {
   position: absolute;
   right: 0.75rem;
   top: 0.75rem;
-  transform: translateZ(58px);
-  z-index: 4;
+  z-index: 8;
 }
 
 .audio-toggle::after {
@@ -500,7 +506,7 @@ svg {
   cursor: pointer;
   display: inline-grid;
   justify-items: center;
-  overflow: hidden;
+  overflow: visible;
   padding: 0;
   position: relative;
   transition:
@@ -535,6 +541,32 @@ svg {
   background: rgb(0 245 255 / 10%);
   border-color: color-mix(in srgb, var(--alien-accent) 62%, var(--alien-line));
   color: var(--alien-accent);
+  box-shadow:
+    0 0 24px rgb(0 245 255 / 24%),
+    0 0 38px rgb(255 47 214 / 18%);
+  animation: audio-button-beacon 1.5s ease-in-out infinite;
+}
+
+.audio-toggle__button[data-state="waiting"]::before,
+.audio-toggle__button[data-state="waiting"]::after {
+  border: 1px solid color-mix(in srgb, var(--alien-hot) 58%, transparent);
+  border-radius: inherit;
+  box-shadow:
+    0 0 22px rgb(255 47 214 / 28%),
+    inset 0 0 16px rgb(0 245 255 / 12%);
+  content: "";
+  inset: -3.6rem;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  animation: audio-focus-rings 2.2s ease-in-out infinite;
+}
+
+.audio-toggle__button[data-state="waiting"]::after {
+  border-color: color-mix(in srgb, var(--alien-accent) 62%, transparent);
+  inset: -5.2rem;
+  opacity: 0.68;
+  animation-delay: 520ms;
 }
 
 .audio-toggle__ring {
@@ -669,10 +701,13 @@ svg {
     order: 2;
   }
 
-  .portrait {
-    margin: 0 auto;
+  .portrait-stage {
     max-width: 380px;
     width: min(100%, 380px);
+  }
+
+  .portrait {
+    margin: 0 auto;
   }
 
   .signal {
@@ -709,10 +744,13 @@ svg {
     justify-items: center;
   }
 
+  .portrait-stage {
+    max-width: none;
+    width: min(100vw - 2rem, 100%);
+  }
+
   .portrait {
-    max-width: 330px;
     padding: 1.1rem;
-    width: min(calc(100vw - 2rem), 330px);
   }
 
   .portrait__image {
@@ -732,10 +770,22 @@ svg {
     width: 2.75rem;
   }
 
+  .audio-toggle__button[data-state="waiting"]::before,
+  .audio-toggle__button[data-state="waiting"]::after {
+    display: none;
+  }
+
   .socials {
     justify-content: center;
     max-width: 330px;
     width: 100%;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .audio-toggle__button[data-state="waiting"]::before,
+  .audio-toggle__button[data-state="waiting"]::after {
+    display: none;
   }
 }
 
@@ -920,6 +970,37 @@ svg {
   }
 }
 
+@keyframes audio-button-beacon {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0, -0.08rem, 0) scale(1.04);
+  }
+}
+
+@keyframes audio-focus-rings {
+  0% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+
+  18% {
+    opacity: 0.9;
+  }
+
+  72% {
+    opacity: 0.54;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.18);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-shell::before,
   .site-shell::after,
@@ -929,6 +1010,9 @@ svg {
   .audio-toggle__button[data-state="playing"] .audio-toggle__ring,
   .audio-toggle__button[data-state="waiting"] .audio-toggle__ring,
   .audio-toggle__button[data-state="playing"] .audio-toggle__bars span,
+  .audio-toggle__button[data-state="waiting"],
+  .audio-toggle__button[data-state="waiting"]::before,
+  .audio-toggle__button[data-state="waiting"]::after,
   .portrait::before,
   .portrait::after,
   .portrait,

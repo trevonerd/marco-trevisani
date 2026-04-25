@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const VOLUME = 0.18;
 const ACTIVITY_EVENTS = ["pointerdown", "keydown", "touchstart"] as const;
@@ -15,8 +15,28 @@ export function AudioPlayer() {
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   const [volume, setVolume] = useState(VOLUME);
 
+  const playAudio = useCallback(async () => {
+    const audio = audioRef.current;
+
+    if (!audio) {
+      return false;
+    }
+
+    try {
+      await audio.play();
+      setIsAutoplayBlocked(false);
+      setIsPlaying(true);
+      return true;
+    } catch {
+      setIsAutoplayBlocked(true);
+      setIsPlaying(false);
+      return false;
+    }
+  }, []);
+
   useEffect(() => {
     const audio = audioRef.current;
+    const touchMedia = window.matchMedia("(hover: none), (pointer: coarse)");
 
     if (!audio) {
       return;
@@ -24,34 +44,23 @@ export function AudioPlayer() {
 
     audio.volume = VOLUME;
 
-    async function startAudio() {
-      if (!audio) {
+    function unlockAudio() {
+      void playAudio();
+    }
+
+    void playAudio().then((hasStarted) => {
+      if (hasStarted || !touchMedia.matches) {
         return;
       }
 
-      try {
-        await audio.play();
-        setIsAutoplayBlocked(false);
-        setIsPlaying(true);
-      } catch {
-        setIsAutoplayBlocked(true);
-        setIsPlaying(false);
+      for (const eventName of ACTIVITY_EVENTS) {
+        window.addEventListener(eventName, unlockAudio, {
+          capture: true,
+          once: true,
+          passive: true
+        });
       }
-    }
-
-    function unlockAudio() {
-      void startAudio();
-    }
-
-    void startAudio();
-
-    for (const eventName of ACTIVITY_EVENTS) {
-      window.addEventListener(eventName, unlockAudio, {
-        capture: true,
-        once: true,
-        passive: true
-      });
-    }
+    });
 
     return () => {
       for (const eventName of ACTIVITY_EVENTS) {
@@ -60,7 +69,7 @@ export function AudioPlayer() {
         });
       }
     };
-  }, []);
+  }, [playAudio]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -102,17 +111,12 @@ export function AudioPlayer() {
     }
 
     if (audio.paused) {
-      try {
-        await audio.play();
-        setIsAutoplayBlocked(false);
-        setIsPlaying(true);
-      } catch {
-        setIsAutoplayBlocked(true);
-      }
+      await playAudio();
       return;
     }
 
     audio.pause();
+    setIsAutoplayBlocked(false);
     setIsPlaying(false);
   }
 

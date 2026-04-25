@@ -72,19 +72,21 @@ export default function Home() {
           </div>
 
           <div className="hero__visual">
-            <TiltPortrait>
+            <div className="portrait-stage">
               <AudioPlayer />
-              <Image
-                className="portrait__image"
-                src="/marco_trevisani_web_developer_cartoon@2x.png"
-                alt="Cartoon portrait of Marco Trevisani"
-                width={400}
-                height={586}
-                priority
-                sizes="(max-width: 820px) 46vw, 220px"
-              />
-              <p className="portrait__role">{profile.title}</p>
-            </TiltPortrait>
+              <TiltPortrait>
+                <Image
+                  className="portrait__image"
+                  src="/marco_trevisani_web_developer_cartoon@2x.png"
+                  alt="Cartoon portrait of Marco Trevisani"
+                  width={400}
+                  height={586}
+                  priority
+                  sizes="(max-width: 820px) 46vw, 220px"
+                />
+                <p className="portrait__role">{profile.title}</p>
+              </TiltPortrait>
+            </div>
             <nav className="socials" aria-label="Marco Trevisani social links">
               {profile.socialLinks.map((link) => (
                 <SocialLink
