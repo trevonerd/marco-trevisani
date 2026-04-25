@@ -1,0 +1,16 @@
+{
+  "name": "Marco Trevisani",
+  "short_name": "Marco Trevisani",
+  "description": "Lead frontend engineer working with React, Next.js, design systems and product UI.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09031a",
+  "theme_color": "#09031a",
+  "icons": [
+    {
+      "src": "/ico/android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

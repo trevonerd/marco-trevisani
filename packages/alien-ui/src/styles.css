@@ -1,0 +1,114 @@
+:root {
+  --alien-bg: #09031a;
+  --alien-bg-soft: #130c2a;
+  --alien-text: #fff8ff;
+  --alien-muted: #cabee6;
+  --alien-line: color-mix(in srgb, var(--alien-text) 14%, transparent);
+  --alien-accent: #00f5ff;
+  --alien-accent-strong: #75ff7a;
+  --alien-hot: #ff2fd6;
+  --alien-cyan: #00f5ff;
+  --alien-radius: 8px;
+  --alien-shadow: 0 24px 80px rgb(0 0 0 / 36%);
+}
+
+.alien-button {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: var(--alien-radius);
+  display: inline-flex;
+  font-size: 0.93rem;
+  font-weight: 760;
+  gap: 0.5rem;
+  justify-content: center;
+  min-height: 2.9rem;
+  padding: 0.72rem 1rem;
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.alien-button:focus-visible,
+.alien-social-link:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--alien-accent) 60%, transparent);
+  outline-offset: 4px;
+}
+
+.alien-button:hover {
+  transform: translateY(-2px);
+}
+
+.alien-button--primary {
+  background: linear-gradient(135deg, var(--alien-hot), var(--alien-accent));
+  color: #080314;
+}
+
+.alien-button--ghost {
+  background: rgb(255 255 255 / 5%);
+  border-color: var(--alien-line);
+  color: var(--alien-text);
+}
+
+.alien-badge {
+  align-items: center;
+  background: rgb(255 255 255 / 6%);
+  border: 1px solid var(--alien-line);
+  border-radius: 999px;
+  color: var(--alien-muted);
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.45rem 0.68rem;
+  white-space: nowrap;
+}
+
+.alien-surface {
+  background: color-mix(in srgb, var(--alien-bg-soft) 88%, transparent);
+  border: 1px solid var(--alien-line);
+  border-radius: var(--alien-radius);
+  box-shadow: var(--alien-shadow);
+}
+
+.alien-social-link {
+  align-items: center;
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid var(--alien-line);
+  border-radius: var(--alien-radius);
+  color: var(--alien-text);
+  display: inline-flex;
+  height: 2.55rem;
+  justify-content: center;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+  width: 2.55rem;
+}
+
+.alien-social-link:hover {
+  background: rgb(255 47 214 / 13%);
+  border-color: color-mix(in srgb, var(--alien-hot) 70%, transparent);
+  color: var(--alien-accent);
+  transform: translateY(-2px);
+}
+
+.alien-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.alien-stack--sm {
+  gap: 0.55rem;
+}
+
+.alien-stack--md {
+  gap: 1rem;
+}
+
+.alien-stack--lg {
+  gap: 1.6rem;
+}

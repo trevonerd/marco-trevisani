@@ -1,3 +1,12 @@
 [build]
-  command = "yarn build && yarn static"
-  publish = "out"
+  command = "bun install --frozen-lockfile && bun run build"
+  publish = "apps/site/out"
+
+[build.environment]
+  BUN_VERSION = "1.3.13"
+  NODE_VERSION = "24"
+
+[dev]
+  command = "bun run dev"
+  targetPort = 3000
+  port = 8888

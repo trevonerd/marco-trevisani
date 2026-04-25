@@ -1,0 +1,25 @@
+{
+  "name": "@marco-trevisani/alien-ui",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles.css": "./src/styles.css"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "react": "19.2.5"
+  },
+  "devDependencies": {
+    "react": "19.2.5",
+    "react-dom": "19.2.5"
+  }
+}
