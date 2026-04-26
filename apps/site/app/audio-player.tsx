@@ -1,5 +1,6 @@
 "use client";
 
+import type { MouseEvent, PointerEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const VOLUME = 0.18;
@@ -10,6 +11,7 @@ export function AudioPlayer() {
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const ctrlDownRef = useRef(false);
   const hoverRef = useRef(false);
+  const pointerToggleRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isAutoplayBlocked, setIsAutoplayBlocked] = useState(false);
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
@@ -44,7 +46,14 @@ export function AudioPlayer() {
 
     audio.volume = VOLUME;
 
-    function unlockAudio() {
+    function unlockAudio(event: Event) {
+      if (
+        event.target instanceof Element &&
+        event.target.closest(".audio-toggle")
+      ) {
+        return;
+      }
+
       void playAudio();
     }
 
@@ -120,6 +129,45 @@ export function AudioPlayer() {
     setIsPlaying(false);
   }
 
+  function toggleFromPointer(event: PointerEvent) {
+    if (event.button !== 0) {
+      return;
+    }
+
+    event.stopPropagation();
+    event.preventDefault();
+    pointerToggleRef.current = true;
+    void toggleAudio();
+  }
+
+  function handleContainerPointerToggle(
+    event: PointerEvent<HTMLFieldSetElement>
+  ) {
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    toggleFromPointer(event);
+  }
+
+  function handleButtonPointerToggle(event: PointerEvent<HTMLButtonElement>) {
+    toggleFromPointer(event);
+  }
+
+  function handleClickToggle() {
+    if (pointerToggleRef.current) {
+      pointerToggleRef.current = false;
+      return;
+    }
+
+    void toggleAudio();
+  }
+
+  function handleButtonClick(event: MouseEvent<HTMLButtonElement>) {
+    event.stopPropagation();
+    handleClickToggle();
+  }
+
   function updateVolume(value: string) {
     const nextVolume = Number(value) / 100;
     const audio = audioRef.current;
@@ -168,6 +216,7 @@ export function AudioPlayer() {
           scheduleVolumeClose();
         }
       }}
+      onPointerDown={handleContainerPointerToggle}
     >
       <legend className="audio-toggle__legend">Music controls</legend>
       <audio
@@ -188,7 +237,8 @@ export function AudioPlayer() {
       <button
         className="audio-toggle__button"
         type="button"
-        onClick={toggleAudio}
+        onClick={handleButtonClick}
+        onPointerDown={handleButtonPointerToggle}
         aria-label={
           isPlaying
             ? "Turn music off"

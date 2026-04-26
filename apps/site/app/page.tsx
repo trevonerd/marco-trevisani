@@ -73,7 +73,6 @@ export default function Home() {
 
           <div className="hero__visual">
             <div className="portrait-stage">
-              <AudioPlayer />
               <TiltPortrait>
                 <Image
                   className="portrait__image"
@@ -86,6 +85,7 @@ export default function Home() {
                 />
                 <p className="portrait__role">{profile.title}</p>
               </TiltPortrait>
+              <AudioPlayer />
             </div>
             <nav className="socials" aria-label="Marco Trevisani social links">
               {profile.socialLinks.map((link) => (

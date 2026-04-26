@@ -249,6 +249,7 @@ svg {
 
 .portrait-stage {
   display: grid;
+  isolation: isolate;
   justify-items: center;
   perspective: 900px;
   position: relative;
@@ -268,7 +269,7 @@ svg {
   display: grid;
   isolation: isolate;
   justify-items: center;
-  overflow: hidden;
+  overflow: visible;
   padding: clamp(1.2rem, 3vw, 1.65rem);
   position: relative;
   text-align: center;
@@ -281,6 +282,7 @@ svg {
     transform 220ms ease;
   will-change: transform;
   width: 100%;
+  z-index: 1;
   animation:
     portrait-rise 800ms ease 240ms both,
     portrait-border-signal 30s ease-in-out 4s infinite;
@@ -323,6 +325,7 @@ svg {
   opacity: 0.42;
   pointer-events: none;
   position: absolute;
+  border-radius: inherit;
   transform: translate3d(-18%, 0, 0);
   z-index: 0;
   animation: portrait-panel-sheen 16s ease-in-out infinite alternate;
@@ -472,13 +475,18 @@ svg {
 
 .audio-toggle {
   border: 0;
+  display: grid;
+  height: 5.8rem;
+  isolation: isolate;
   margin: 0;
   padding: 0;
-  pointer-events: none;
+  place-items: start end;
+  pointer-events: auto;
   position: absolute;
-  right: 0.75rem;
+  right: 0;
   top: 0.75rem;
-  z-index: 8;
+  width: 5.8rem;
+  z-index: 4;
 }
 
 .audio-toggle::after {
