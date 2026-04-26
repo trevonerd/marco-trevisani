@@ -11,6 +11,27 @@ import { Icon } from "./social-icons";
 import { JsonLd } from "./structured-data";
 import { TiltPortrait } from "./tilt-portrait";
 
+const backgroundParticles = [
+  "aurora",
+  "signal",
+  "pulse",
+  "orbit",
+  "spark",
+  "glow",
+  "nova",
+  "flux",
+  "beam",
+  "dust",
+  "ion",
+  "halo",
+  "wave",
+  "echo",
+  "glint",
+  "flare",
+  "prism",
+  "ray"
+];
+
 export default function Home() {
   return (
     <main className="site-shell" id="main-content">
@@ -18,6 +39,11 @@ export default function Home() {
         Skip to content
       </a>
       <JsonLd />
+      <div className="background-particles" aria-hidden="true">
+        {backgroundParticles.map((particle) => (
+          <span key={particle} />
+        ))}
+      </div>
       <div className="page">
         <section className="hero" aria-label="Marco Trevisani landing page">
           <div className="hero__content">

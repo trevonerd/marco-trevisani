@@ -101,6 +101,179 @@ svg {
   animation: grid-drift 24s linear infinite;
 }
 
+.background-particles {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.background-particles span {
+  --particle-alpha: 0.46;
+  --particle-size: 0.34rem;
+  background:
+    radial-gradient(circle, rgb(255 255 255 / 86%) 0 18%, transparent 19%),
+    radial-gradient(circle, rgb(0 245 255 / 72%) 0 42%, transparent 64%);
+  border-radius: 999px;
+  box-shadow:
+    0 0 calc(var(--particle-size) * 2.8) rgb(0 245 255 / 34%),
+    0 0 calc(var(--particle-size) * 5.2) rgb(255 47 214 / 14%);
+  height: var(--particle-size);
+  left: var(--particle-left);
+  opacity: var(--particle-alpha);
+  position: absolute;
+  top: calc(100% + var(--particle-size));
+  transform: translate3d(0, 0, 0);
+  width: var(--particle-size);
+  animation: particle-drift var(--particle-duration) linear infinite;
+  animation-delay: var(--particle-delay);
+}
+
+.background-particles span:nth-child(1) {
+  --particle-alpha: 0.34;
+  --particle-delay: -4s;
+  --particle-duration: 24s;
+  --particle-left: 5%;
+  --particle-size: 0.2rem;
+}
+
+.background-particles span:nth-child(2) {
+  --particle-alpha: 0.5;
+  --particle-delay: -15s;
+  --particle-duration: 32s;
+  --particle-left: 12%;
+  --particle-size: 0.46rem;
+}
+
+.background-particles span:nth-child(3) {
+  --particle-alpha: 0.28;
+  --particle-delay: -8s;
+  --particle-duration: 28s;
+  --particle-left: 19%;
+  --particle-size: 0.72rem;
+}
+
+.background-particles span:nth-child(4) {
+  --particle-alpha: 0.44;
+  --particle-delay: -21s;
+  --particle-duration: 36s;
+  --particle-left: 27%;
+  --particle-size: 0.3rem;
+}
+
+.background-particles span:nth-child(5) {
+  --particle-alpha: 0.58;
+  --particle-delay: -10s;
+  --particle-duration: 26s;
+  --particle-left: 34%;
+  --particle-size: 0.56rem;
+}
+
+.background-particles span:nth-child(6) {
+  --particle-alpha: 0.32;
+  --particle-delay: -2s;
+  --particle-duration: 34s;
+  --particle-left: 42%;
+  --particle-size: 0.24rem;
+}
+
+.background-particles span:nth-child(7) {
+  --particle-alpha: 0.52;
+  --particle-delay: -18s;
+  --particle-duration: 30s;
+  --particle-left: 49%;
+  --particle-size: 0.82rem;
+}
+
+.background-particles span:nth-child(8) {
+  --particle-alpha: 0.4;
+  --particle-delay: -7s;
+  --particle-duration: 27s;
+  --particle-left: 56%;
+  --particle-size: 0.38rem;
+}
+
+.background-particles span:nth-child(9) {
+  --particle-alpha: 0.62;
+  --particle-delay: -25s;
+  --particle-duration: 39s;
+  --particle-left: 63%;
+  --particle-size: 0.68rem;
+}
+
+.background-particles span:nth-child(10) {
+  --particle-alpha: 0.36;
+  --particle-delay: -11s;
+  --particle-duration: 31s;
+  --particle-left: 70%;
+  --particle-size: 0.26rem;
+}
+
+.background-particles span:nth-child(11) {
+  --particle-alpha: 0.54;
+  --particle-delay: -3s;
+  --particle-duration: 25s;
+  --particle-left: 76%;
+  --particle-size: 0.5rem;
+}
+
+.background-particles span:nth-child(12) {
+  --particle-alpha: 0.3;
+  --particle-delay: -19s;
+  --particle-duration: 35s;
+  --particle-left: 84%;
+  --particle-size: 0.9rem;
+}
+
+.background-particles span:nth-child(13) {
+  --particle-alpha: 0.48;
+  --particle-delay: -13s;
+  --particle-duration: 29s;
+  --particle-left: 91%;
+  --particle-size: 0.42rem;
+}
+
+.background-particles span:nth-child(14) {
+  --particle-alpha: 0.28;
+  --particle-delay: -23s;
+  --particle-duration: 42s;
+  --particle-left: 96%;
+  --particle-size: 0.22rem;
+}
+
+.background-particles span:nth-child(15) {
+  --particle-alpha: 0.56;
+  --particle-delay: -16s;
+  --particle-duration: 33s;
+  --particle-left: 8%;
+  --particle-size: 0.64rem;
+}
+
+.background-particles span:nth-child(16) {
+  --particle-alpha: 0.42;
+  --particle-delay: -6s;
+  --particle-duration: 38s;
+  --particle-left: 31%;
+  --particle-size: 0.36rem;
+}
+
+.background-particles span:nth-child(17) {
+  --particle-alpha: 0.5;
+  --particle-delay: -27s;
+  --particle-duration: 44s;
+  --particle-left: 68%;
+  --particle-size: 0.78rem;
+}
+
+.background-particles span:nth-child(18) {
+  --particle-alpha: 0.34;
+  --particle-delay: -12s;
+  --particle-duration: 37s;
+  --particle-left: 88%;
+  --particle-size: 0.28rem;
+}
+
 .page {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
@@ -108,6 +281,8 @@ svg {
   max-width: 1180px;
   min-height: 100svh;
   padding: clamp(0.8rem, 2vh, 1.2rem) 1.2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .hero {
@@ -269,7 +444,7 @@ svg {
   display: grid;
   isolation: isolate;
   justify-items: center;
-  overflow: visible;
+  overflow: hidden;
   padding: clamp(1.2rem, 3vw, 1.65rem);
   position: relative;
   text-align: center;
@@ -326,9 +501,8 @@ svg {
   pointer-events: none;
   position: absolute;
   border-radius: inherit;
-  transform: translate3d(-18%, 0, 0);
+  transform: translate3d(0, 0, 0);
   z-index: 0;
-  animation: portrait-panel-sheen 16s ease-in-out infinite alternate;
 }
 
 .portrait__image {
@@ -825,6 +999,23 @@ svg {
   }
 }
 
+@keyframes particle-drift {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.72);
+  }
+
+  14%,
+  76% {
+    opacity: var(--particle-alpha);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(clamp(-2.8rem, -4vw, -1rem), -112vh, 0) scale(1.18);
+  }
+}
+
 @keyframes name-enter {
   from {
     opacity: 0;
@@ -929,18 +1120,6 @@ svg {
   }
 }
 
-@keyframes portrait-panel-sheen {
-  from {
-    opacity: 0.32;
-    transform: translate3d(-18%, 0, 0);
-  }
-
-  to {
-    opacity: 0.52;
-    transform: translate3d(10%, 0, 0);
-  }
-}
-
 @keyframes signal-scan {
   0%,
   100% {
@@ -1018,6 +1197,7 @@ svg {
 @media (prefers-reduced-motion: reduce) {
   .site-shell::before,
   .site-shell::after,
+  .background-particles span,
   .hero__name-word,
   .hero__name-word::before,
   .hero__name-word::after,
