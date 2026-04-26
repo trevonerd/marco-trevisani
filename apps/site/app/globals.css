@@ -657,7 +657,7 @@ svg {
   place-items: start end;
   pointer-events: auto;
   position: absolute;
-  right: 0;
+  right: 0.75rem;
   top: 0.75rem;
   width: 5.8rem;
   z-index: 4;
