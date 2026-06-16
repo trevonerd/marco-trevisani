@@ -437,7 +437,8 @@ svg {
 }
 
 .hero__meta-dot {
-  color: inherit;
+  color: var(--alien-hot);
+  text-shadow: 0 0 16px oklch(66% 0.245 336 / 34%);
 }
 
 .hero__visual {
