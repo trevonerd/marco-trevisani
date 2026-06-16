@@ -934,6 +934,21 @@ svg {
   animation-delay: 520ms;
 }
 
+.audio-toggle__prompt {
+  color: color-mix(in oklch, var(--alien-text) 88%, var(--alien-accent));
+  font-size: 0.62rem;
+  font-weight: 800;
+  inset-block-start: calc(100% + 0.42rem);
+  inset-inline: 50% auto;
+  letter-spacing: 0;
+  line-height: 1;
+  position: absolute;
+  text-shadow: 0 0 14px oklch(78.4% 0.133 221 / 52%);
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
 .audio-toggle__ring {
   border: 1px solid color-mix(in oklch, var(--alien-hot) 56%, transparent);
   border-radius: inherit;

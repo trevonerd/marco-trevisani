@@ -11,11 +11,12 @@ describe("AudioPlayer", () => {
     expect(markup).toContain('data-state="waiting"');
     expect(markup).toContain("audio-toggle__beacon-ring--inner");
     expect(markup).toContain("audio-toggle__beacon-ring--outer");
+    expect(markup).toContain("Clicca qui");
   });
 
-  it("keeps autoplay available for mobile unlock", () => {
+  it("does not render autoplay audio", () => {
     const markup = renderToStaticMarkup(createElement(AudioPlayer));
 
-    expect(markup).toContain("autoPlay");
+    expect(markup).not.toContain("autoPlay");
   });
 });

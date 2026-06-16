@@ -10,7 +10,6 @@ import {
 } from "./pulse-grid";
 
 const VOLUME = 0.18;
-const ACTIVITY_EVENTS = ["pointerdown", "keydown", "touchstart"] as const;
 const AUDIO_ENERGY_PROPERTY = "--audio-energy";
 const MIN_AUDIO_ENERGY = 0.004;
 const FALLBACK_PULSE_DURATION_SECONDS = 300;
@@ -176,47 +175,13 @@ export function AudioPlayer() {
 
   useEffect(() => {
     const audio = audioRef.current;
-    const touchMedia = window.matchMedia("(hover: none), (pointer: coarse)");
 
     if (!audio) {
       return;
     }
 
     audio.volume = VOLUME;
-
-    function unlockAudio(event: Event) {
-      if (
-        event.target instanceof Element &&
-        event.target.closest(".audio-toggle")
-      ) {
-        return;
-      }
-
-      void playAudio();
-    }
-
-    void playAudio().then((hasStarted) => {
-      if (hasStarted || !touchMedia.matches) {
-        return;
-      }
-
-      for (const eventName of ACTIVITY_EVENTS) {
-        window.addEventListener(eventName, unlockAudio, {
-          capture: true,
-          once: true,
-          passive: true
-        });
-      }
-    });
-
-    return () => {
-      for (const eventName of ACTIVITY_EVENTS) {
-        window.removeEventListener(eventName, unlockAudio, {
-          capture: true
-        });
-      }
-    };
-  }, [playAudio]);
+  }, []);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -361,7 +326,6 @@ export function AudioPlayer() {
       <audio
         ref={audioRef}
         src="/audio/trevisoft.mp3"
-        autoPlay
         loop
         preload="auto"
         onEnded={() => setIsPlaying(false)}
@@ -396,6 +360,7 @@ export function AudioPlayer() {
           <span className="audio-toggle__beacon" aria-hidden="true">
             <span className="audio-toggle__beacon-ring audio-toggle__beacon-ring--inner" />
             <span className="audio-toggle__beacon-ring audio-toggle__beacon-ring--outer" />
+            <span className="audio-toggle__prompt">Clicca qui</span>
           </span>
         ) : null}
         <span className="audio-toggle__ring" aria-hidden="true" />
