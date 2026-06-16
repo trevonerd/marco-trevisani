@@ -4,15 +4,16 @@ export const profile = {
   location: "Bologna, Italy",
   email: "info@marcotrevisani.com",
   website: "https://trevisoft.dev",
-  eyebrow: "Lead Frontend Engineer / React / Next.js",
+  eyebrow: "Lead Frontend Engineer | React | Next.js",
   headline: "Marco Trevisani",
-  subheadline: "Lead frontend engineer for products that need to feel fast.",
+  subheadline:
+    "Fast React and Next.js interfaces that stay clean under pressure.",
   summary:
-    "I design and ship modern web experiences with React, Next.js, strong frontend architecture, and design systems that stay clean under real product pressure.",
+    "I lead frontend work across product UI, architecture, and design systems: shipping polished interfaces fast, without leaving teams with code they dread maintaining.",
   highlights: [
-    "10+ years in frontend",
+    "20 years in frontend",
     "React and Next.js",
-    "Lead-level architecture",
+    "Frontend architecture",
     "Design systems",
     "Product-minded UI"
   ],

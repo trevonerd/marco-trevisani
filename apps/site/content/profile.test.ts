@@ -17,6 +17,7 @@ describe("profile", () => {
 
   it("positions Marco as a lead frontend engineer", () => {
     expect(profile.title).toBe("Lead Frontend Engineer");
-    expect(profile.highlights).toContain("Lead-level architecture");
+    expect(profile.highlights).toContain("20 years in frontend");
+    expect(profile.highlights).toContain("Frontend architecture");
   });
 });

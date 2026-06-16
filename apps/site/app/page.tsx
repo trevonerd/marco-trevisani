@@ -32,6 +32,10 @@ const backgroundParticles = [
   "ray"
 ];
 
+const projectAndCreativeLinks = profile.socialLinks.filter(
+  (link) => link.label !== "LinkedIn"
+);
+
 export default function Home() {
   return (
     <main className="site-shell" id="main-content">
@@ -77,7 +81,7 @@ export default function Home() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Trevisoft.dev
+                Visit Trevisoft
               </LinkButton>
               <LinkButton
                 href={profile.socialLinks[0].href}
@@ -93,7 +97,7 @@ export default function Home() {
               <span className="hero__meta-dot">+</span>
               <span>creative coding</span>
               <span className="hero__meta-dot">+</span>
-              <span>side projects</span>
+              <span>Trevisoft lab</span>
             </div>
           </div>
 
@@ -113,8 +117,11 @@ export default function Home() {
               </TiltPortrait>
               <AudioPlayer />
             </div>
-            <nav className="socials" aria-label="Marco Trevisani social links">
-              {profile.socialLinks.map((link) => (
+            <nav
+              className="socials"
+              aria-label="Marco Trevisani project and creative links"
+            >
+              {projectAndCreativeLinks.map((link) => (
                 <SocialLink
                   key={link.href}
                   href={link.href}
@@ -132,17 +139,18 @@ export default function Home() {
           <div className="signal__content">
             <div className="signal__header">
               <span className="signal__mark" aria-hidden="true" />
-              <p className="signal__eyebrow">Side-project lab</p>
+              <p className="signal__eyebrow">Trevisoft lab</p>
             </div>
-            <strong>Trevisoft is where experiments become products.</strong>
+            <strong>The family label behind my side projects.</strong>
             <p>
-              Useful tools, web experiments and small digital products built
-              with the same care as client work.
+              Trevisoft is the small studio hat I put on experiments, useful
+              tools, and odd product ideas: a place to ship fast, keep the craft
+              high, and give every project its own stamp.
             </p>
             <ul className="signal__meta">
-              <li>Tools</li>
-              <li>Experiments</li>
-              <li>Product UI</li>
+              <li>Side projects</li>
+              <li>Useful tools</li>
+              <li>Web experiments</li>
             </ul>
           </div>
           <div className="signal__action">
@@ -153,7 +161,7 @@ export default function Home() {
               tone="ghost"
               className="signal__button"
             >
-              <span>Visit Lab</span>
+              <span>Open the lab</span>
               <svg
                 aria-hidden="true"
                 height="18"

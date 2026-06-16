@@ -4,8 +4,8 @@
   "description": "Lead frontend engineer working with React, Next.js, design systems and product UI.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#09031a",
-  "theme_color": "#09031a",
+  "background_color": "#010e11",
+  "theme_color": "#010e11",
   "icons": [
     {
       "src": "/ico/android-icon-192x192.png",

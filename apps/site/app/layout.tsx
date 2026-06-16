@@ -1,11 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Audiowide } from "next/font/google";
+import { Audiowide, Saira } from "next/font/google";
 import "./globals.css";
 
 const audiowide = Audiowide({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-display",
+  display: "swap"
+});
+
+const saira = Saira({
+  subsets: ["latin"],
+  variable: "--font-body",
   display: "swap"
 });
 
@@ -72,7 +78,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#09031a",
+  themeColor: "#010e11",
   colorScheme: "dark"
 };
 
@@ -80,7 +86,7 @@ export default function RootLayout({
   children
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="it" className={audiowide.variable}>
+    <html lang="it" className={`${audiowide.variable} ${saira.variable}`}>
       <body>{children}</body>
     </html>
   );
