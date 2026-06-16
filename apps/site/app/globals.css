@@ -55,6 +55,7 @@ svg {
   --space-md: clamp(1rem, 1.6vw, 1.5rem);
   --space-lg: clamp(1.5rem, 2.6vw, 2.5rem);
   --space-xl: clamp(2rem, 4vw, 3.75rem);
+  --audio-energy: 0;
   isolation: isolate;
   min-height: 100svh;
   overflow: hidden;
@@ -131,6 +132,89 @@ svg {
   z-index: 0;
 }
 
+.background-particles::before {
+  background:
+    linear-gradient(
+      126deg,
+      transparent 6%,
+      oklch(66% 0.245 336 / 13%) 38%,
+      oklch(78.4% 0.133 221 / 16%) 56%,
+      transparent 82%
+    ),
+    radial-gradient(
+      ellipse at 76% 32%,
+      oklch(66% 0.245 336 / 13%),
+      transparent 48%
+    ),
+    radial-gradient(
+      ellipse at 18% 76%,
+      oklch(78.4% 0.133 221 / 12%),
+      transparent 54%
+    );
+  content: "";
+  filter: blur(18px) saturate(calc(1 + (var(--audio-energy) * 0.22)))
+    brightness(calc(1 + (var(--audio-energy) * 0.08)));
+  inset: -18%;
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translate3d(0, 0, 0) scale(calc(1 + (var(--audio-energy) * 0.08)));
+  transition: opacity 120ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+  z-index: 0;
+  animation: audio-aura-drift 8.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.background-particles::after {
+  background:
+    linear-gradient(
+      104deg,
+      transparent 0 24%,
+      oklch(66% 0.245 336 / 0%) 32%,
+      oklch(66% 0.245 336 / 17%) 45%,
+      oklch(78.4% 0.133 221 / 13%) 55%,
+      transparent 72%
+    ),
+    linear-gradient(
+      22deg,
+      transparent 0 42%,
+      oklch(92% 0.045 216 / 7%) 50%,
+      transparent 64%
+    );
+  content: "";
+  filter: blur(20px) saturate(calc(1 + (var(--audio-energy) * 0.28)));
+  inset: -22%;
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translate3d(
+      calc(var(--audio-energy) * -0.9rem),
+      calc(var(--audio-energy) * 0.45rem),
+      0
+    )
+    scale(calc(1 + (var(--audio-energy) * 0.055)));
+  transition: opacity 90ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+  z-index: 0;
+}
+
+.site-shell:is([data-audio-state="playing"], [data-audio-state="paused"])
+  .background-particles::before {
+  opacity: calc(0.035 + (var(--audio-energy) * 0.26));
+}
+
+.site-shell:is([data-audio-state="playing"], [data-audio-state="paused"])
+  .background-particles::after {
+  opacity: calc(var(--audio-energy) * 0.3);
+}
+
+.site-shell[data-audio-state="waiting"] .background-particles::before,
+.site-shell[data-audio-state="waiting"] .background-particles::after {
+  opacity: 0;
+}
+
 .background-particles span {
   --particle-alpha: 0.46;
   --particle-size: 0.34rem;
@@ -150,6 +234,17 @@ svg {
   width: var(--particle-size);
   animation: particle-drift var(--particle-duration) linear infinite;
   animation-delay: var(--particle-delay);
+}
+
+.site-shell:is([data-audio-state="playing"], [data-audio-state="paused"])
+  .background-particles
+  span {
+  filter: saturate(calc(1 + (var(--audio-energy) * 0.48)))
+    brightness(calc(1 + (var(--audio-energy) * 0.14)));
+  opacity: min(
+    0.78,
+    calc(var(--particle-alpha) + (var(--audio-energy) * 0.14))
+  );
 }
 
 .background-particles span:nth-child(1) {
@@ -1312,9 +1407,29 @@ svg {
   }
 }
 
+@keyframes audio-aura-drift {
+  0%,
+  100% {
+    transform: translate3d(-1.4%, 1.1%, 0)
+      scale(calc(1 + (var(--audio-energy) * 0.08)));
+  }
+
+  45% {
+    transform: translate3d(1.2%, -0.8%, 0)
+      scale(calc(1.025 + (var(--audio-energy) * 0.095)));
+  }
+
+  72% {
+    transform: translate3d(0.6%, 1.4%, 0)
+      scale(calc(1.01 + (var(--audio-energy) * 0.07)));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-shell::before,
   .site-shell::after,
+  .background-particles::before,
+  .background-particles::after,
   .background-particles span,
   .hero__name-word,
   .hero__name-word::before,
@@ -1330,6 +1445,14 @@ svg {
   .signal::before,
   .signal__mark {
     animation: none;
+  }
+
+  .background-particles::before,
+  .background-particles::after {
+    filter: none;
+    opacity: 0;
+    transform: none;
+    transition: none;
   }
 
   .portrait,
