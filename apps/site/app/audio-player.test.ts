@@ -11,7 +11,7 @@ describe("AudioPlayer", () => {
     expect(markup).toContain('data-state="waiting"');
     expect(markup).toContain("audio-toggle__beacon-ring--inner");
     expect(markup).toContain("audio-toggle__beacon-ring--outer");
-    expect(markup).toContain("Clicca qui");
+    expect(markup).toContain("Click here");
   });
 
   it("does not render autoplay audio", () => {

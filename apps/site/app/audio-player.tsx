@@ -360,7 +360,7 @@ export function AudioPlayer() {
           <span className="audio-toggle__beacon" aria-hidden="true">
             <span className="audio-toggle__beacon-ring audio-toggle__beacon-ring--inner" />
             <span className="audio-toggle__beacon-ring audio-toggle__beacon-ring--outer" />
-            <span className="audio-toggle__prompt">Clicca qui</span>
+            <span className="audio-toggle__prompt">Click here</span>
           </span>
         ) : null}
         <span className="audio-toggle__ring" aria-hidden="true" />
