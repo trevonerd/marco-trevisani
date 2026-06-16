@@ -768,6 +768,7 @@ svg {
   color: var(--alien-text);
   cursor: pointer;
   display: inline-grid;
+  isolation: isolate;
   justify-items: center;
   overflow: visible;
   padding: 0;
@@ -806,31 +807,35 @@ svg {
   border-color: color-mix(in oklch, var(--alien-accent) 62%, var(--alien-line));
   color: var(--alien-accent);
   box-shadow:
-    0 0 24px oklch(92% 0.045 216 / 18%),
-    0 0 38px oklch(78.4% 0.133 221 / 16%);
+    0 0 24px oklch(92% 0.045 216 / 24%),
+    0 0 38px oklch(66% 0.245 336 / 18%);
   animation: audio-button-beacon 1.5s ease-in-out infinite;
 }
 
-.audio-toggle__button[data-state="waiting"]::before,
-.audio-toggle__button[data-state="waiting"]::after {
-  border: 1px solid color-mix(in oklch, var(--alien-hot) 44%, transparent);
+.audio-toggle__beacon {
   border-radius: inherit;
-  box-shadow:
-    0 0 18px oklch(66% 0.245 336 / 16%),
-    inset 0 0 12px oklch(92% 0.045 216 / 8%);
-  content: "";
-  inset: -2.6rem;
-  opacity: 0.72;
+  inset: 0;
   pointer-events: none;
   position: absolute;
-  z-index: -1;
+  z-index: 0;
+}
+
+.audio-toggle__beacon-ring {
+  border: 1px solid color-mix(in oklch, var(--alien-hot) 58%, transparent);
+  border-radius: inherit;
+  box-shadow:
+    0 0 22px oklch(66% 0.245 336 / 28%),
+    inset 0 0 16px oklch(92% 0.045 216 / 12%);
+  inset: -3rem;
+  pointer-events: none;
+  position: absolute;
   animation: audio-focus-rings 2.2s ease-in-out infinite;
 }
 
-.audio-toggle__button[data-state="waiting"]::after {
-  border-color: color-mix(in oklch, var(--alien-accent) 48%, transparent);
-  inset: -3.8rem;
-  opacity: 0.42;
+.audio-toggle__beacon-ring--outer {
+  border-color: color-mix(in oklch, var(--alien-accent) 62%, transparent);
+  inset: -4.4rem;
+  opacity: 0.68;
   animation-delay: 520ms;
 }
 
@@ -840,6 +845,7 @@ svg {
   inset: 0.34rem;
   opacity: 0;
   position: absolute;
+  z-index: 1;
 }
 
 .audio-toggle__button[data-state="playing"] .audio-toggle__ring {
@@ -859,6 +865,7 @@ svg {
   justify-content: center;
   position: relative;
   width: 1.4rem;
+  z-index: 1;
 }
 
 .audio-toggle__bars span {
@@ -1065,11 +1072,6 @@ svg {
     width: 2.75rem;
   }
 
-  .audio-toggle__button[data-state="waiting"]::before,
-  .audio-toggle__button[data-state="waiting"]::after {
-    display: none;
-  }
-
   .socials {
     justify-content: center;
     max-width: 330px;
@@ -1080,13 +1082,6 @@ svg {
 @media (max-width: 360px) {
   .hero__title {
     font-size: 2.62rem;
-  }
-}
-
-@media (hover: none), (pointer: coarse) {
-  .audio-toggle__button[data-state="waiting"]::before,
-  .audio-toggle__button[data-state="waiting"]::after {
-    display: none;
   }
 }
 
@@ -1326,10 +1321,9 @@ svg {
   .hero__name-word::after,
   .audio-toggle__button[data-state="playing"] .audio-toggle__ring,
   .audio-toggle__button[data-state="waiting"] .audio-toggle__ring,
+  .audio-toggle__beacon-ring,
   .audio-toggle__button[data-state="playing"] .audio-toggle__bars span,
   .audio-toggle__button[data-state="waiting"],
-  .audio-toggle__button[data-state="waiting"]::before,
-  .audio-toggle__button[data-state="waiting"]::after,
   .portrait::before,
   .portrait::after,
   .portrait,

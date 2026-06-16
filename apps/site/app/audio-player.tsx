@@ -1,6 +1,6 @@
 "use client";
 
-import type { MouseEvent, PointerEvent } from "react";
+import type { MouseEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const VOLUME = 0.18;
@@ -11,9 +11,9 @@ export function AudioPlayer() {
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const ctrlDownRef = useRef(false);
   const hoverRef = useRef(false);
-  const pointerToggleRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isAutoplayBlocked, setIsAutoplayBlocked] = useState(false);
+  const [hasStartedAudio, setHasStartedAudio] = useState(false);
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   const [volume, setVolume] = useState(VOLUME);
 
@@ -27,6 +27,7 @@ export function AudioPlayer() {
     try {
       await audio.play();
       setIsAutoplayBlocked(false);
+      setHasStartedAudio(true);
       setIsPlaying(true);
       return true;
     } catch {
@@ -129,43 +130,9 @@ export function AudioPlayer() {
     setIsPlaying(false);
   }
 
-  function toggleFromPointer(event: PointerEvent) {
-    if (event.button !== 0) {
-      return;
-    }
-
-    event.stopPropagation();
-    event.preventDefault();
-    pointerToggleRef.current = true;
-    void toggleAudio();
-  }
-
-  function handleContainerPointerToggle(
-    event: PointerEvent<HTMLFieldSetElement>
-  ) {
-    if (event.target !== event.currentTarget) {
-      return;
-    }
-
-    toggleFromPointer(event);
-  }
-
-  function handleButtonPointerToggle(event: PointerEvent<HTMLButtonElement>) {
-    toggleFromPointer(event);
-  }
-
-  function handleClickToggle() {
-    if (pointerToggleRef.current) {
-      pointerToggleRef.current = false;
-      return;
-    }
-
-    void toggleAudio();
-  }
-
   function handleButtonClick(event: MouseEvent<HTMLButtonElement>) {
     event.stopPropagation();
-    handleClickToggle();
+    void toggleAudio();
   }
 
   function updateVolume(value: string) {
@@ -190,6 +157,12 @@ export function AudioPlayer() {
     cancelVolumeClose();
     closeTimerRef.current = setTimeout(() => setIsVolumeOpen(false), 700);
   }
+
+  const audioState = isPlaying
+    ? "playing"
+    : hasStartedAudio
+      ? "paused"
+      : "waiting";
 
   return (
     <fieldset
@@ -216,7 +189,6 @@ export function AudioPlayer() {
           scheduleVolumeClose();
         }
       }}
-      onPointerDown={handleContainerPointerToggle}
     >
       <legend className="audio-toggle__legend">Music controls</legend>
       <audio
@@ -229,6 +201,7 @@ export function AudioPlayer() {
         onPause={() => setIsPlaying(false)}
         onPlay={() => {
           setIsAutoplayBlocked(false);
+          setHasStartedAudio(true);
           setIsPlaying(true);
         }}
       >
@@ -238,7 +211,6 @@ export function AudioPlayer() {
         className="audio-toggle__button"
         type="button"
         onClick={handleButtonClick}
-        onPointerDown={handleButtonPointerToggle}
         aria-label={
           isPlaying
             ? "Turn music off"
@@ -247,10 +219,14 @@ export function AudioPlayer() {
               : "Turn music on"
         }
         aria-pressed={isPlaying}
-        data-state={
-          isPlaying ? "playing" : isAutoplayBlocked ? "waiting" : "paused"
-        }
+        data-state={audioState}
       >
+        {audioState === "waiting" ? (
+          <span className="audio-toggle__beacon" aria-hidden="true">
+            <span className="audio-toggle__beacon-ring audio-toggle__beacon-ring--inner" />
+            <span className="audio-toggle__beacon-ring audio-toggle__beacon-ring--outer" />
+          </span>
+        ) : null}
         <span className="audio-toggle__ring" aria-hidden="true" />
         <span className="audio-toggle__bars" aria-hidden="true">
           <span />
